@@ -1,6 +1,6 @@
 #include "pipex.h"
 
-void	multiple_cmd(char ***cmd, t_file *file, int fd, int ac)
+void	multiple_cmd(char ***cmd, t_file *file, int ac)
 {
 	int fd2[2];
 	int prev_pipe;
@@ -15,10 +15,10 @@ void	multiple_cmd(char ***cmd, t_file *file, int fd, int ac)
 	{
 		if (i > 0)
 			pipe(fd2);
-		 pid = fork();
-		if ( pid== 0)
+		pid = fork();
+		if (pid== 0)
 		{
-			dup2(fd, 0);
+			dup2(file->in_fd, 0);
 			if (i > 0)
 				dup2(prev_pipe, 0);
 			arg = path_check(cmd[i][0]);
@@ -31,32 +31,32 @@ void	multiple_cmd(char ***cmd, t_file *file, int fd, int ac)
 		}
 		if (i > 0)
 			prev_pipe = dup(fd2[0]);
-		wait(NULL);
-		close(fd);
+		close(file->in_fd);
 		close(fd2[1]);
 		close(fd2[0]);
 		i++;
 	}
+	//wait(NULL);
 }
 
 void	do_the_cmd(char ***cmd, t_file *file, int ac)
 {
-	int	fd[2];
-	char	*arg;
+	// int	fd[2];
+	// char	*arg;
 
-	pipe(fd);
-	pid_t pid = fork();
-	if (pid == 0)
-	{
-		arg = path_check(cmd[0][0]);
-		close(fd[0]);
-		dup2(file->in_fd, 0);
-		dup2(fd[1], 1);
-		execve(arg, cmd[0], NULL);
-	}
-	wait(NULL);
-	close(fd[1]);
-	multiple_cmd(&cmd[1], file, fd[0], (ac - 4));
+	// pipe(fd);
+	// pid_t pid = fork();
+	// if (pid == 0)
+	// {
+	// 	arg = path_check(cmd[0][0]);
+	// 	close(fd[0]);
+	// 	dup2(file->in_fd, 0);
+	// 	dup2(fd[1], 1);
+	// 	execve(arg, cmd[0], NULL);
+	// }
+	// wait(NULL);
+	// close(fd[1]);
+	multiple_cmd(cmd, file, (ac - 3));
 }
 
 void	take_cmd(int ac, char **av, t_file *file)

@@ -33,6 +33,6 @@ char	**ft_split(char *str, char c);
 //pipex.c
 void	take_cmd(int ac, char **av, t_file *file);
 void	do_the_cmd(char ***cmd, t_file *file, int ac);
-void	multiple_cmd(char ***cmd, t_file *file, int fd, int ac);
+void	multiple_cmd(char ***cmd, t_file *file, int ac);
 
 # endif
