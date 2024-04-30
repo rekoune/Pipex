@@ -59,3 +59,19 @@ char *path_check(char *cmd)
 	}
 	return(NULL);
 }
+
+void	free_3D(char ***cmd)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (cmd[i])
+	{
+		j = 0;
+		while(cmd[i][j])
+			free(cmd[i][j++]);
+		free(cmd[i++]);
+	}
+	free(cmd);
+}

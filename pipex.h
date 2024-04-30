@@ -12,6 +12,9 @@ typedef struct t_files{
 
 	int in_fd;
 	int ou_fd;
+	int	new_pipe[2];
+	int prev_pipe;
+	pid_t *pid;
 
 }t_file;
 
@@ -21,6 +24,7 @@ void	check_files(int ac, char ** av, t_file *file);
 void	error();
 char 	*str_join(char *s1, char *s2);
 char 	*path_check(char *cmd);
+void	free_3D(char ***cmd);
 
 
 //split_cmd.c
@@ -33,6 +37,6 @@ char	**ft_split(char *str, char c);
 //pipex.c
 void	take_cmd(int ac, char **av, t_file *file);
 void	do_the_cmd(char ***cmd, t_file *file, int ac);
-void	multiple_cmd(char ***cmd, t_file *file, int ac);
+void	child_pross(t_file *file, char ***cmd, int i, int ac);
 
 # endif

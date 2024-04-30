@@ -3,20 +3,25 @@
 int main ()
 {
 	int fd[2];
-	char *cmd[] = {"wc", NULL};
-	char *cmd2[] = {"awk" ,"{print $1}", NULL};
+	char *cmd[] = {"cat", NULL};
+	char *cmd2[] = {"wc -l", NULL};
 	int fj = open("hona.txt", O_RDWR | O_CREAT, 0777);
 	
 	pipe(fd);
+	pid_t pid[2];
 
 	if (fork() == 0)
 	{
+		pid[0] = getpid();
+		printf("%d]\n", pid[0]);
 		dup2(fj, 0);
 		close(fj);
 		dup2(fd[1], 1);
 		close (fd[1]);
-		execve("/usr/bin/wc", cmd, NULL);
+		
+		execve("/bin/cat", cmd, NULL);
 	}
+		
 	// char g[100];
 	// read(fd[0], g, 100);
 	// printf("%s", g);
@@ -26,8 +31,13 @@ int main ()
 		//dup2(fd[1], 1);
 		close(fd[1]);
 		dup2(fd[0], 0);
-		execve("/usr/bin/awk", cmd2, NULL);
+		pid[1] = getpid();
+		printf("hona\n");
+		printf("%d]\n", pid[1]);
+		execve("/usr/bin/wc", cmd2, NULL);
 	}
+	printf(">> %d\n", pid[0]);
+	printf(">> %d\n", pid[1]);
 	// wait(NULL);
 
 

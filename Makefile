@@ -6,7 +6,7 @@ NAME = pipex
 all : $(NAME)
 
 $(NAME) : $(CFILES)
-	$(CC) $(CFLAGS) -fsanitize=address -g $(CFILES) -o $(NAME)
+	$(CC) $(CFLAGS) $(CFILES) -o $(NAME)
 
 out : 
 	./pipex "ls"
