@@ -6,12 +6,11 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 01:26:32 by arekoune          #+#    #+#             */
-/*   Updated: 2024/04/29 10:23:20 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:55:12 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
 
 int	str_len(char *str, char c)
 {
@@ -74,8 +73,8 @@ char	**ft_split(char *str, char c)
 	int		n_word;
 	char	**s;
 	int		i;
-	char a;
-	int b;
+	char	a;
+	int		b;
 
 	i = 0;
 	b = 1;
@@ -104,9 +103,10 @@ char	**ft_split(char *str, char c)
 
 // int main ()
 // {
-// 	char **str = ft_split("/Users/arekoune/goinfre/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki", ':');
+// 	char **str = ft_split("/Users/arekoune/goinfre/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki",
+//			':');
 // 	int i = 0;
-	
+
 // 	while (str[i])
 // 		printf("%s\n", str[i++]);
 // }
