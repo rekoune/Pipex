@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 01:26:32 by arekoune          #+#    #+#             */
-/*   Updated: 2024/04/30 20:55:12 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/04 13:23:38 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	counte(char *str, char c)
 	i = 0;
 	nf = 1;
 	counter = 0;
+	if (!str)
+		return(0);
 	while (str[i])
 	{
 		if (str[i] == c)
@@ -64,7 +66,7 @@ char	*sub_str(char *str, int len)
 		s[i] = str[i];
 		i++;
 	}
-	s[i] = '\0';
+	s[i] = '\0'; 
 	return (s);
 }
 
@@ -101,12 +103,17 @@ char	**ft_split(char *str, char c)
 	return (s);
 }
 
-// int main ()
-// {
-// 	char **str = ft_split("/Users/arekoune/goinfre/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki",
-//			':');
-// 	int i = 0;
+int	compare(char *s1, char *s2)
+{
+	int	i;
 
-// 	while (str[i])
-// 		printf("%s\n", str[i++]);
-// }
+	i = 0;
+	while(s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return(s1[i] - s2[i]);
+		i++;
+	}
+		printf("s - s == %d\n", s1[i]-s2[i]);
+	return(s1[i] - s2[i]);
+}

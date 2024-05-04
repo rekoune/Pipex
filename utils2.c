@@ -25,6 +25,8 @@ char *get_the_path(char **env)
 	int	i;
 
 	i = 0;
+	if (!env)
+		return(NULL);
 	while (env[i])
 	{
 		if (find("PATH=", env[i]) == 1)
@@ -32,4 +34,21 @@ char *get_the_path(char **env)
 		i++;
 	}
 	return(NULL);
+}
+
+void	error(char *cmd, char c)
+{
+	if(c == 'f')
+	{
+		ft_write(cmd, 2);
+		ft_write(": No such file or directory\n", 2);
+	}
+	else if(c == 'c')
+	{
+		ft_write(cmd, 2);
+		ft_write(": command not found\n", 2);
+	}
+	else
+		ft_write(cmd, 2);
+	exit(1);
 }

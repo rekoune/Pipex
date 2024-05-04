@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:38 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/01 19:59:23 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:37:44 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,28 @@ char	*str_join(char *s1, char *s2)
 	return (str);
 }
 
-void	error(void)
+void	ft_write(char *str, int a)
 {
-	write(2, "error\n", 6);
-	exit(1);
+	int	i;
+
+	i = 0;
+	if (!str)
+		return;
+	while (str[i])
+		write(a, &str[i++], 1);
 }
 
 void	check_files(int ac, char **av, t_file *file)
 {
-	file->in_fd = open(av[1], O_RDWR);
-	if (file->in_fd == -1)
-		error();
+	if (compare(av[1], "here_doc") != 0)
+	{
+		file->in_fd = open(av[1], O_RDWR);
+		if (file->in_fd == -1)
+			error(av[1], 'f');
+	}
 	file->ou_fd = open(av[ac - 1], O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (file->ou_fd == -1)
-		error();
+		error("Error\n", 'A');
 }
 
 char	*path_check(char *cmd, t_file *file)
@@ -60,14 +68,18 @@ char	*path_check(char *cmd, t_file *file)
 
 	i = 0;
 	path = get_the_path(file->env);
+	if (!path)
+		error(cmd, 'f');
 	str = ft_split(path, ':');
-	while (str[i])
+	while (str && str[i])
 	{
 		arg = str_join(str[i], cmd);
 		if (access(arg, X_OK) == 0)
 			return (arg);
+		free(arg);
 		i++;
 	}
+	error(cmd, 'c');
 	return (NULL);
 }
 

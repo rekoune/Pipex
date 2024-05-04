@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:35 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/01 21:44:03 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/04 20:34:26 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ void	child_pross(t_file *file, char ***cmd, int i, int ac)
 {
 	char	*arg;
 
+	// printf("fd[0] == %d\n", file->new_pipe[0]);
+	// printf("fd[1] == %d\n", file->new_pipe[1]);
+	// printf("prev_pipe == %d\n", file->prev_pipe);
 	if (i == 0)
 	{
 		close(file->new_pipe[0]);
@@ -34,17 +37,16 @@ void	child_pross(t_file *file, char ***cmd, int i, int ac)
 	{
 		dup2(file->ou_fd, 1);
 		close(file->ou_fd);
-		printf("hona i = %d\n", i);
 	}
 	close(file->new_pipe[0]);
 	execve(arg, cmd[i], file->env);
-	perror("error: ");
+	perror("Error: ");
 }
 
 void	do_the_cmd(char ***cmd, t_file *file, int ac)
 {
 	int	i;
-
+	
 	i = 0;
 	file->pid = malloc(ac * sizeof(pid_t));
 	while (i < ac)
@@ -67,12 +69,6 @@ void	do_the_cmd(char ***cmd, t_file *file, int ac)
 	while (i < ac)
 		if (waitpid(file->pid[i++], NULL, 0) == -1)
 			perror("waitpid");
-
-	// i = 0;
-	// while (i < ac)
-	// 	if(!wait(NULL))
-	// 		printf("wait for %d", i++);
-	// 		// perror("waitpid");
 }
 
 void	take_cmd(int ac, char **av, t_file *file)
@@ -91,6 +87,30 @@ void	take_cmd(int ac, char **av, t_file *file)
 	free_3D(cmd);
 }
 
+// void	her_doc(int ac, char **av, t_file *file)
+// {
+// 	char *line;
+// 	char *limeter;
+// 	int	i;
+	
+// 	i = 0;
+// 	limeter = malloc(str_len(av[2], ' ') + 2);
+// 	while (av[2][i])
+// 	{
+// 		limeter[i] = av[2][i];
+// 		i++;
+// 	}
+// 	limeter[i++] = '\n';
+// 	limeter[i] = '\0';
+// 	line = get_next_line(0);
+// 	while (line && (compare(line, limeter) != 0))
+// 	{
+// 		free(line);
+// 		line = get_next_line(0);
+// 	}
+// 	take_cmd(ac - 4, av, file, 'h');
+// }
+
 int	main(int ac, char **av, char **env)
 {
 	t_file	file;
@@ -98,12 +118,8 @@ int	main(int ac, char **av, char **env)
 	file.in_fd = 0;
 	file.env = env;
 	if (ac < 5)
-		error();
+		error("Error\n", 'A');
 	check_files(ac, av, &file);
 	take_cmd(ac, av, &file);
 	close(file.ou_fd);
-	//printf("arg = %s\n", av[3]);
-	//printf("%s\n", env[4]);
-	// while (1);
-	// system("leaks pipex");
 }
