@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:35 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/04 20:34:26 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:40:10 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ void	child_pross(t_file *file, char ***cmd, int i, int ac)
 {
 	char	*arg;
 
-	// printf("fd[0] == %d\n", file->new_pipe[0]);
-	// printf("fd[1] == %d\n", file->new_pipe[1]);
-	// printf("prev_pipe == %d\n", file->prev_pipe);
 	if (i == 0)
 	{
 		close(file->new_pipe[0]);
@@ -40,7 +37,7 @@ void	child_pross(t_file *file, char ***cmd, int i, int ac)
 	}
 	close(file->new_pipe[0]);
 	execve(arg, cmd[i], file->env);
-	perror("Error: ");
+	perror("execve ");
 }
 
 void	do_the_cmd(char ***cmd, t_file *file, int ac)
@@ -71,45 +68,25 @@ void	do_the_cmd(char ***cmd, t_file *file, int ac)
 			perror("waitpid");
 }
 
-void	take_cmd(int ac, char **av, t_file *file)
+void	take_cmd(int ac, char **av, t_file *file, char c)
 {
 	int		i;
 	char	***cmd;
-	int		j;
 
-	cmd = malloc((ac - 2) * sizeof(char **));
-	j = 0;
-	i = 2;
-	while (i < (ac - 1))
-		cmd[j++] = ft_split(av[i++], ' ');
-	cmd[j] = NULL;
-	do_the_cmd(cmd, file, ac - 3);
+	cmd = malloc((ac + 1) * sizeof(char **));
+	i = 0;
+	while (i < ac)
+	{
+		cmd[i] = ft_split(av[i], ' ');
+		i++;
+	}
+	cmd[i] = NULL;
+	if (c == 'h')
+		here_doc(cmd, file, ac);
+	else
+		do_the_cmd(cmd, file, ac);
 	free_3D(cmd);
 }
-
-// void	her_doc(int ac, char **av, t_file *file)
-// {
-// 	char *line;
-// 	char *limeter;
-// 	int	i;
-	
-// 	i = 0;
-// 	limeter = malloc(str_len(av[2], ' ') + 2);
-// 	while (av[2][i])
-// 	{
-// 		limeter[i] = av[2][i];
-// 		i++;
-// 	}
-// 	limeter[i++] = '\n';
-// 	limeter[i] = '\0';
-// 	line = get_next_line(0);
-// 	while (line && (compare(line, limeter) != 0))
-// 	{
-// 		free(line);
-// 		line = get_next_line(0);
-// 	}
-// 	take_cmd(ac - 4, av, file, 'h');
-// }
 
 int	main(int ac, char **av, char **env)
 {
@@ -120,6 +97,13 @@ int	main(int ac, char **av, char **env)
 	if (ac < 5)
 		error("Error\n", 'A');
 	check_files(ac, av, &file);
-	take_cmd(ac, av, &file);
+	if (compare(av[1], "here_doc") == 0)
+	{
+		file.limeter = av[2];
+		take_cmd(ac - 4, &av[3], &file, 'h');
+	}
+	else
+		take_cmd(ac - 3, &av[2], &file, '\0');
 	close(file.ou_fd);
+	//system("leaks pipex");
 }

@@ -1,4 +1,4 @@
-CFILES = pipex.c split_cmd.c utils.c utils2.c get_next_line.c get_next_line_utils.c
+CFILES = pipex.c split_cmd.c utils.c utils2.c get_next_line.c get_next_line_utils.c here_doc.c
 OFILES = $(CFILES:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra
@@ -10,7 +10,7 @@ HEADER = pipex.h
 all : $(NAME)
 
 $(NAME) : $(OFILES) $(HEADER)
-	$(CC) $(CFLAGS) -fsanitize=address -g $(OFILES) -o $(NAME)
+	$(CC) $(CFLAGS)  $(OFILES) -o $(NAME)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -20,6 +20,8 @@ clean:
 
 fclean: clean
 	rm -rf $(NAME)
+
+bonus: all
 
 re: fclean all
 

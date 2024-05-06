@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 01:26:32 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/04 13:23:38 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/05 21:28:16 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char	**ft_split(char *str, char c)
 	i = 0;
 	b = 1;
 	n_word = counte(str, c);
+	printf("wor >> %d\n", n_word);
 	s = malloc((n_word + 1) * sizeof(char *));
 	a = c;
 	while (i < n_word && *str)
@@ -114,6 +115,14 @@ int	compare(char *s1, char *s2)
 			return(s1[i] - s2[i]);
 		i++;
 	}
-		printf("s - s == %d\n", s1[i]-s2[i]);
 	return(s1[i] - s2[i]);
+}
+
+int	main ()
+{
+	char **str = ft_split("abdellah \'rekoune\' hamza aouky", ' ');
+	int i = 0;
+
+	while (str[i])
+		printf("{%s}\n", str[i++]);
 }
