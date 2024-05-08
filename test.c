@@ -1,7 +1,16 @@
-// #include "pipex.h"
+#include "pipex.h"
 
-// int main ()
-// {
+void change(char **str)
+{
+	*(str)++;
+	printf("%s\n", *str);
+}
+
+int main ()
+{
+	char *str = "abdellahrekoune";
+	change(&str);
+	printf("str == %s\n", str);
 // 	// int fd[2];
 // 	// char *cmd[] = {"adf", NULL};
 // 	// char *cmd2[] = {"asdf", NULL};
@@ -39,4 +48,4 @@
 // 	read(fd, str, 9);
 // 	printf("%s\n", str);
 // 	printf("%d\n", fd);
-// }
+}

@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:35 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/05 17:40:10 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:09:10 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	child_pross(t_file *file, char ***cmd, int i, int ac)
 void	do_the_cmd(char ***cmd, t_file *file, int ac)
 {
 	int	i;
-	
+
 	i = 0;
 	file->pid = malloc(ac * sizeof(pid_t));
 	while (i < ac)
@@ -85,7 +85,7 @@ void	take_cmd(int ac, char **av, t_file *file, char c)
 		here_doc(cmd, file, ac);
 	else
 		do_the_cmd(cmd, file, ac);
-	free_3D(cmd);
+	free_3d(cmd);
 }
 
 int	main(int ac, char **av, char **env)
@@ -105,5 +105,5 @@ int	main(int ac, char **av, char **env)
 	else
 		take_cmd(ac - 3, &av[2], &file, '\0');
 	close(file.ou_fd);
-	//system("leaks pipex");
+	system("leaks pipex -q");
 }

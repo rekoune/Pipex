@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:38 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/05 10:50:07 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:08:33 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_write(char *str, int a)
 
 	i = 0;
 	if (!str)
-		return;
+		return ;
 	while (str[i])
 		write(a, &str[i++], 1);
 }
@@ -64,7 +64,6 @@ void	check_files(int ac, char **av, t_file *file)
 			error("Error\n", 'A');
 	}
 }
-	
 
 char	*path_check(char *cmd, t_file *file)
 {
@@ -90,7 +89,7 @@ char	*path_check(char *cmd, t_file *file)
 	return (NULL);
 }
 
-void	free_3D(char ***cmd)
+void	free_3d(char ***cmd)
 {
 	int	i;
 	int	j;

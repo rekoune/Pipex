@@ -6,51 +6,51 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 01:26:32 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/05 21:28:16 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:06:06 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	str_len(char *str, char c)
+void	coun_ter(char *str, char c, int i, int *counter)
 {
-	int	i;
+	int	nf;
+	int	a;
 
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i] && str[i] != c)
-		i++;
-	return (i);
+	nf = 1;
+	a = 0;
+	while (str[++i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			c = str[i];
+			a++;
+		}
+		if (str[i] == c)
+			nf = 1;
+		else if (str[i] != c && nf == 1)
+		{
+			(*counter)++;
+			nf = 0;
+		}
+		if (a == 2)
+		{
+			a = 0;
+			c = ' ';
+		}
+	}
 }
 
 int	counte(char *str, char c)
 {
 	int	i;
-	int	nf;
 	int	counter;
 
-	i = 0;
-	nf = 1;
+	i = -1;
 	counter = 0;
 	if (!str)
-		return(0);
-	while (str[i])
-	{
-		if (str[i] == c)
-			nf = 1;
-		else if (str[i] == 39)
-		{
-			c = 39;
-			nf = 1;
-		}
-		else if (str[i] != c && str[i] != ' ' && nf == 1)
-		{
-			nf = 0;
-			counter++;
-		}
-		i++;
-	}
+		return (0);
+	coun_ter(str, c, i, &counter);
 	return (counter);
 }
 
@@ -66,8 +66,22 @@ char	*sub_str(char *str, int len)
 		s[i] = str[i];
 		i++;
 	}
-	s[i] = '\0'; 
+	s[i] = '\0';
 	return (s);
+}
+
+void	skip_delimiter(char **str, char *c, char j)
+{
+	while (**str == *c)
+		(*str)++;
+	*c = j;
+	while (**str == *c)
+		(*str)++;
+	if (**str == '\'' || **str == '"')
+	{
+		*c = **str;
+		(*str)++;
+	}
 }
 
 char	**ft_split(char *str, char c)
@@ -75,54 +89,21 @@ char	**ft_split(char *str, char c)
 	int		n_word;
 	char	**s;
 	int		i;
-	char	a;
-	int		b;
+	char	j;
 
 	i = 0;
-	b = 1;
+	j = c;
 	n_word = counte(str, c);
-	printf("wor >> %d\n", n_word);
 	s = malloc((n_word + 1) * sizeof(char *));
-	a = c;
 	while (i < n_word && *str)
 	{
+		skip_delimiter(&str, &c, j);
 		while (*str == c)
 			str++;
-		if (*str == 39)
-		{
-			str++;
-			if (b == 1)
-				c = 39;
-			b = 0;
-		}
 		if (*str && *str != c)
 			s[i++] = sub_str(str, str_len(str, c));
 		str += str_len(str, c);
-		c = a;
 	}
 	s[i] = NULL;
 	return (s);
-}
-
-int	compare(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while(s1[i] && s2[i])
-	{
-		if (s1[i] != s2[i])
-			return(s1[i] - s2[i]);
-		i++;
-	}
-	return(s1[i] - s2[i]);
-}
-
-int	main ()
-{
-	char **str = ft_split("abdellah \'rekoune\' hamza aouky", ' ');
-	int i = 0;
-
-	while (str[i])
-		printf("{%s}\n", str[i++]);
 }

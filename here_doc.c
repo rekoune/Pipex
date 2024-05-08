@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/08 11:07:34 by arekoune          #+#    #+#             */
+/*   Updated: 2024/05/08 11:07:35 by arekoune         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	child_bonus(t_file *file, char ***cmd, int i, int ac)
 {
-	char *arg;
+	char	*arg;
 
 	close(file->new_pipe[0]);
 	dup2(file->prev_pipe, 0);
@@ -40,31 +52,31 @@ void	do_cmd_bonus(t_file *file, char ***cmd, int ac)
 			perror("Error: ");
 }
 
-char *add_nw(char *str)
+char	*add_nw(char *str)
 {
-	char *limeter;
-	int	i;
+	char	*limeter;
+	int		i;
 
 	i = 0;
-	limeter	= malloc(str_len(str, '\0') + 2);
+	limeter = malloc(str_len(str, '\0') + 2);
 	while (str[i])
 	{
-		limeter[i]  = str[i];
+		limeter[i] = str[i];
 		i++;
 	}
 	limeter[i++] = '\n';
 	limeter[i] = '\0';
-	return(limeter);
+	return (limeter);
 }
 
 void	here_doc(char ***cmd, t_file *file, int ac)
 {
-	char *line;
-	char *limeter;
-	int	i;
+	char	*line;
+	char	*limeter;
+	int		i;
 
 	i = 0;
-	limeter	= add_nw(file->limeter);
+	limeter = add_nw(file->limeter);
 	pipe(file->new_pipe);
 	line = get_next_line(0);
 	while (line && compare(line, limeter) != 0)
