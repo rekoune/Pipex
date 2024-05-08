@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:38 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/08 11:08:33 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:18:18 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ char	*path_check(char *cmd, t_file *file)
 	char	*arg;
 
 	i = 0;
+	if (access(cmd, X_OK) == 0)
+		return(cmd);
 	path = get_the_path(file->env);
 	if (!path)
 		error(cmd, 'f');

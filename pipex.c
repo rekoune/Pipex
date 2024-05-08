@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:35 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/08 11:09:10 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:56:01 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,5 @@ int	main(int ac, char **av, char **env)
 	else
 		take_cmd(ac - 3, &av[2], &file, '\0');
 	close(file.ou_fd);
-	system("leaks pipex -q");
+	// system("leaks pipex -q");
 }
