@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:35 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/08 12:56:01 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/10 10:21:44 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	child_pross(t_file *file, char ***cmd, int i, int ac)
 	if (i == 0)
 	{
 		close(file->new_pipe[0]);
+		if (file->in_fd == -1)
+			exit(1);
 		dup2(file->in_fd, 0);
 		close(file->in_fd);
 	}
@@ -31,10 +33,9 @@ void	child_pross(t_file *file, char ***cmd, int i, int ac)
 	dup2(file->new_pipe[1], 1);
 	close(file->new_pipe[1]);
 	if ((i + 1) == ac)
-	{
 		dup2(file->ou_fd, 1);
+	if ((i + 1) == ac)
 		close(file->ou_fd);
-	}
 	close(file->new_pipe[0]);
 	execve(arg, cmd[i], file->env);
 	perror("execve ");
@@ -105,5 +106,4 @@ int	main(int ac, char **av, char **env)
 	else
 		take_cmd(ac - 3, &av[2], &file, '\0');
 	close(file.ou_fd);
-	// system("leaks pipex -q");
 }

@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:38 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/08 11:18:18 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:25:46 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,16 @@ void	check_files(int ac, char **av, t_file *file)
 	{
 		file->in_fd = open(av[1], O_RDWR);
 		if (file->in_fd == -1)
-			error(av[1], 'f');
+			perror(av[1]);
 		file->ou_fd = open(av[ac - 1], O_CREAT | O_RDWR | O_TRUNC, 0777);
 		if (file->ou_fd == -1)
-			error("Error\n", 'A');
+			perror(av[ac - 1]);
 	}
 	else
 	{
 		file->ou_fd = open(av[ac - 1], O_CREAT | O_RDWR | O_APPEND, 0777);
 		if (file->ou_fd == -1)
-			error("Error\n", 'A');
+			perror(av[ac - 1]);
 	}
 }
 
@@ -73,8 +73,11 @@ char	*path_check(char *cmd, t_file *file)
 	char	*arg;
 
 	i = 0;
-	if (access(cmd, X_OK) == 0)
-		return(cmd);
+	if (access(cmd, F_OK) == 0)
+	{
+		printf("ana hona\n");
+		return (cmd);
+	}
 	path = get_the_path(file->env);
 	if (!path)
 		error(cmd, 'f');
@@ -82,7 +85,7 @@ char	*path_check(char *cmd, t_file *file)
 	while (str && str[i])
 	{
 		arg = str_join(str[i], cmd);
-		if (access(arg, X_OK) == 0)
+		if (access(arg, F_OK) == 0)
 			return (arg);
 		free(arg);
 		i++;

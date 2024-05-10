@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 11:09:40 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/08 11:10:11 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:46:33 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	find(char *to_find, char *str)
 	while (str[i])
 	{
 		j = 0;
-		while (str[i + j] == to_find[j])
+		while (str[i + j] == to_find[j] && i + j < 5)
 		{
 			if (to_find[j + 1] == '\0')
 				return (1);
