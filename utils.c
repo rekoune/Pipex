@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:38 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/09 17:25:46 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:53:52 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,8 @@ char	*path_check(char *cmd, t_file *file)
 	char	*arg;
 
 	i = 0;
-	if (access(cmd, F_OK) == 0)
-	{
-		printf("ana hona\n");
+	if (access(cmd, X_OK) == 0)
 		return (cmd);
-	}
 	path = get_the_path(file->env);
 	if (!path)
 		error(cmd, 'f');
@@ -85,7 +82,7 @@ char	*path_check(char *cmd, t_file *file)
 	while (str && str[i])
 	{
 		arg = str_join(str[i], cmd);
-		if (access(arg, F_OK) == 0)
+		if (access(arg, X_OK) == 0)
 			return (arg);
 		free(arg);
 		i++;

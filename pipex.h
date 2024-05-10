@@ -6,15 +6,14 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:40 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/10 10:21:19 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:56:35 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
-//
+
 # include <stdio.h>
-//
 # include "get_next_line.h"
 # include <fcntl.h>
 # include <stdlib.h>

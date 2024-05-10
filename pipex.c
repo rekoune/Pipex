@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:35 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/10 10:21:44 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:46:02 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int ac, char **av, char **env)
 	file.in_fd = 0;
 	file.env = env;
 	if (ac < 5)
-		error("Error\n", 'A');
+		error("Error: arguments less than 5\n", 'A');
 	check_files(ac, av, &file);
 	if (compare(av[1], "here_doc") == 0)
 	{
