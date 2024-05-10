@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 11:07:34 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/08 11:07:35 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:39:55 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	do_cmd_bonus(t_file *file, char ***cmd, int ac)
 	while (i < ac)
 		if (waitpid(file->pid[i++], NULL, 0) == -1)
 			perror("Error: ");
+	free(file->pid);
 }
 
 char	*add_nw(char *str)

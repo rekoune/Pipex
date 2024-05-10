@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:35 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/10 17:46:02 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:49:16 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	do_the_cmd(char ***cmd, t_file *file, int ac)
 	while (i < ac)
 		if (waitpid(file->pid[i++], NULL, 0) == -1)
 			perror("waitpid");
+	free(file->pid);
 }
 
 void	take_cmd(int ac, char **av, t_file *file, char c)
@@ -87,6 +88,10 @@ void	take_cmd(int ac, char **av, t_file *file, char c)
 	else
 		do_the_cmd(cmd, file, ac);
 	free_3d(cmd);
+}
+void leaks()
+{
+	system("leaks pipex -q");
 }
 
 int	main(int ac, char **av, char **env)
