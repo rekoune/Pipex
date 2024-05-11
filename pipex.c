@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:35 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/10 19:49:16 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/11 10:59:32 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	take_cmd(int ac, char **av, t_file *file, char c)
 		do_the_cmd(cmd, file, ac);
 	free_3d(cmd);
 }
-void leaks()
+
+void	leaks(void)
 {
 	system("leaks pipex -q");
 }

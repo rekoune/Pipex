@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 11:07:34 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/10 19:39:55 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/05/11 11:06:56 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,11 @@ void	here_doc(char ***cmd, t_file *file, int ac)
 	i = 0;
 	limeter = add_nw(file->limeter);
 	pipe(file->new_pipe);
+	write(1, "> ", 2);
 	line = get_next_line(0);
 	while (line && compare(line, limeter) != 0)
-	{
+	{	
+		write(1, "> ", 2);
 		write(file->new_pipe[1], line, str_len(line, '\0'));
 		free(line);
 		line = get_next_line(0);
