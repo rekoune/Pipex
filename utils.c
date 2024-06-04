@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:38 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/10 17:53:52 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/06/04 09:59:57 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ void	check_files(int ac, char **av, t_file *file)
 		file->in_fd = open(av[1], O_RDWR);
 		if (file->in_fd == -1)
 			perror(av[1]);
-		file->ou_fd = open(av[ac - 1], O_CREAT | O_RDWR | O_TRUNC, 0777);
+		file->ou_fd = open(av[ac - 1], O_CREAT | O_RDWR | O_TRUNC, 0666);
 		if (file->ou_fd == -1)
 			perror(av[ac - 1]);
 	}
 	else
 	{
-		file->ou_fd = open(av[ac - 1], O_CREAT | O_RDWR | O_APPEND, 0777);
+		file->ou_fd = open(av[ac - 1], O_CREAT | O_RDWR | O_APPEND, 0666);
 		if (file->ou_fd == -1)
 			perror(av[ac - 1]);
 	}

@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:53:35 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/11 10:59:32 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/06/04 09:55:47 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	child_pross(t_file *file, char ***cmd, int i, int ac)
 		close(file->ou_fd);
 	close(file->new_pipe[0]);
 	execve(arg, cmd[i], file->env);
-	perror("execve ");
+	error("Error : execve fails!\n", 'a');
 }
 
 void	do_the_cmd(char ***cmd, t_file *file, int ac)
@@ -49,7 +49,8 @@ void	do_the_cmd(char ***cmd, t_file *file, int ac)
 	file->pid = malloc(ac * sizeof(pid_t));
 	while (i < ac)
 	{
-		pipe(file->new_pipe);
+		if (pipe(file->new_pipe) == -1)
+			error("Error : pipe fails!\n", 'a');
 		file->pid[i] = fork();
 		if (file->pid[i] == 0)
 			child_pross(file, cmd, i, ac);
@@ -88,11 +89,6 @@ void	take_cmd(int ac, char **av, t_file *file, char c)
 	else
 		do_the_cmd(cmd, file, ac);
 	free_3d(cmd);
-}
-
-void	leaks(void)
-{
-	system("leaks pipex -q");
 }
 
 int	main(int ac, char **av, char **env)

@@ -1,7 +1,7 @@
 CFILES = pipex.c split_cmd.c utils.c utils2.c get_next_line.c get_next_line_utils.c here_doc.c
 OFILES = $(CFILES:.c=.o)
 
-CFLAGS = -Wall -Werror -Wextra #-fsanitize=address -g
+CFLAGS = -Wall -Werror -Wextra
 CC = cc 
 
 NAME = pipex

@@ -6,7 +6,7 @@
 /*   By: arekoune <arekoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 11:07:34 by arekoune          #+#    #+#             */
-/*   Updated: 2024/05/11 11:16:49 by arekoune         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:04:30 by arekoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	child_bonus(t_file *file, char ***cmd, int i, int ac)
 		dup2(file->ou_fd, 1);
 	arg = path_check(cmd[i][0], file);
 	execve(arg, cmd[i], file->env);
-	perror("Error: ");
+	error("Error: execve fails !\n", 'a');
 }
 
 void	do_cmd_bonus(t_file *file, char ***cmd, int ac)
@@ -78,7 +78,8 @@ void	here_doc(char ***cmd, t_file *file, int ac)
 
 	i = 0;
 	limeter = add_nw(file->limeter);
-	pipe(file->new_pipe);
+	if (pipe(file->new_pipe) == -1)
+		error("Error : pipe fails!\n", 'a');
 	write(1, "> ", 2);
 	line = get_next_line(0);
 	while (line && compare(line, limeter) != 0)
